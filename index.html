@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сайт-визитка — Специальность: Почтовая связь</title>
+<style>
+  :root {
+    --primary: #2b4c7e;
+    --primary-light: #4a78b8;
+    --accent: #f0a500;
+    --bg: #f7f9fc;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ====== HEADER / NAV ====== */
+  header {
+    position: fixed; top:0; left:0; right:0;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+  nav {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 24px;
+  }
+  .logo {
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text);
+    font-size: 0.95rem; font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--primary); }
+  .burger { display:none; font-size:1.6rem; cursor:pointer; background:none; border:none; color:var(--primary); }
+
+  /* ====== HERO ====== */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff;
+    padding: 100px 24px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-60px; right:-60px;
+    width: 300px; height: 300px; border-radius:50%;
+    background: rgba(240,165,0,0.12);
+  }
+  .hero::after {
+    content:''; position:absolute; bottom:-80px; left:-40px;
+    width: 220px; height: 220px; border-radius:50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .hero-content {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;
+    position: relative; z-index: 2;
+  }
+  .hero-text h1 { font-size: 2.8rem; font-weight: 800; line-height:1.15; margin-bottom: 16px; }
+  .hero-text .subtitle {
+    font-size: 1.25rem; opacity: 0.92; margin-bottom: 28px;
+    font-weight: 300;
+  }
+  .hero-text .tagline {
+    display: inline-block; background: var(--accent); color: #1a1a2e;
+    padding: 6px 18px; border-radius: 50px; font-weight: 600;
+    font-size: 0.9rem; margin-bottom: 24px;
+  }
+  .hero-buttons { display:flex; gap:16px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 13px 32px; border-radius: 50px;
+    text-decoration: none; font-weight: 600; font-size: 1rem;
+    transition: all .25s; cursor: pointer; border: 2px solid transparent;
+  }
+  .btn-primary { background: var(--accent); color: #1a1a2e; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(240,165,0,0.4); }
+  .btn-outline { background: transparent; color:#fff; border-color: rgba(255,255,255,0.5); }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+  }
+  .avatar-circle {
+    width: 260px; height: 260px; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 4px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 6rem; position: relative;
+  }
+  .avatar-circle::after {
+    content: '✉'; position: absolute; bottom: 10px; right: 15px;
+    font-size: 3rem; opacity: 0.3;
+  }
+
+  /* ====== SECTIONS ====== */
+  section { padding: 80px 24px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    text-align: center; margin-bottom: 50px;
+  }
+  .section-title h2 {
+    font-size: 2rem; font-weight: 700; color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .section-title p { color: var(--muted); font-size: 1.05rem; }
+  .section-title::after {
+    content:''; display:block; width: 60px; height: 4px;
+    background: var(--accent); margin: 14px auto 0; border-radius: 2px;
+  }
+
+  /* ====== ABOUT ====== */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+  }
+  .about-text p { margin-bottom: 16px; color: var(--text); font-size: 1.05rem; }
+  .info-list { list-style: none; }
+  .info-list li {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; background: var(--card); border-radius: 12px;
+    margin-bottom: 12px; box-shadow: var(--shadow); transition: transform .2s;
+  }
+  .info-list li:hover { transform: translateX(6px); }
+  .info-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .info-label { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .info-value { font-size: 1rem; font-weight: 600; color: var(--text); }
+
+  /* ====== SKILLS ====== */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap: 24px;
+  }
+  .skill-card {
+    background: var(--card); border-radius: var(--radius);
+    padding: 30px 24px; box-shadow: var(--shadow);
+    transition: transform .25s, box-shadow .25s;
+    text-align: center;
+  }
+  .skill-card:hover { transform: translateY(-6px); box-shadow: 0 10px 32px rgba(0,0,0,0.12); }
+  .skill-icon {
+    width: 60px; height: 60px; border-radius: 14px; margin: 0 auto 18px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+  }
+  .skill-card h3 { font-size: 1.15rem; margin-bottom: 10px; color: var(--primary); }
+  .skill-card p { font-size: 0.95rem; color: var(--muted); }
+
+  /* ====== EDUCATION ====== */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content:''; position:absolute; left:0; top:0; bottom:0;
+    width: 3px; background: linear-gradient(var(--primary), var(--primary-light));
+    border-radius: 2px;
+  }
+  .timeline-item {
+    position: relative; padding: 0 0 36px 30px;
+  }
+  .timeline-item::before {
+    content:''; position:absolute; left:-36px; top:4px;
+    width: 16px; height: 16px; border-radius:50%;
+    background: var(--accent); border: 3px solid #fff;
+    box-shadow: 0 0 0 3px var(--primary);
+  }
+  .timeline-item .year {
+    display: inline-block; background: var(--primary); color:#fff;
+    padding: 3px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .timeline-item h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 6px; }
+  .timeline-item .inst { color: var(--primary); font-weight: 500; margin-bottom: 8px; }
+  .timeline-item p { color: var(--muted); font-size: 0.95rem; }
+
+  /* ====== CONTACT ====== */
+  .contact {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff;
+  }
+  .contact .section-title h2 { color: #fff; }
+  .contact .section-title p { color: rgba(255,255,255,0.8); }
+  .contact .section-title::after { background: var(--accent); }
+  .contact-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+    max-width: 800px; margin: 0 auto;
+  }
+  .contact-card {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius); padding: 28px 20px; text-align: center;
+    transition: background .25s, transform .25s;
+    text-decoration: none; color: #fff;
+  }
+  .contact-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-4px); }
+  .contact-card .ic { font-size: 2rem; margin-bottom: 12px; }
+  .contact-card .lbl { font-size: 0.8rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
+  .contact-card .val { font-size: 1.05rem; font-weight: 600; margin-top: 4px; }
+
+  /* ====== FOOTER ====== */
+  footer {
+    background: #1a1a2e; color: rgba(255,255,255,0.6);
+    text-align: center; padding: 30px 24px; font-size: 0.9rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ====== ANIMATIONS ====== */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity .6s, transform .6s; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ====== RESPONSIVE ====== */
+  @media (max-width: 768px) {
+    .nav-links { display: none; position: absolute; top: 100%; left:0; right:0;
+      flex-direction: column; background: #fff; padding: 20px; gap: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .nav-links.open { display: flex; }
+    .burger { display: block; }
+    .hero-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+    .hero-text h1 { font-size: 2rem; }
+    .hero-visual { order: -1; }
+    .avatar-circle { width: 180px; height: 180px; font-size: 4rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .hero-buttons { justify-content: center; }
+    section { padding: 60px 20px; }
+    .section-title h2 { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <nav>
+    <a href="#hero" class="logo">Почта<span>·</span>Визитка</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">Обо мне</a></li>
+      <li><a href="#skills">Навыки</a></li>
+      <li><a href="#education">Образование</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Меню">☰</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="tagline">Студентка колледжа</span>
+      <h1>Специальность:<br>Почтовая связь</h1>
+      <p class="subtitle">Будущий специалист почтовой службы — организую доставку, работаю с клиентами и документооборотом</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">Связаться со мной</a>
+        <a href="#about" class="btn btn-outline">Обо мне</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="avatar-circle">👤</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-title">
+      <h2>Обо мне</h2>
+      <p>Несколько слов о себе и своей специальности</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>Здравствуйте! Я — студентка колледжа, обучаюсь по специальности «Почтовая связь». Моя будущая профессия — это не просто конверты и марки, а целая система логистики, обслуживания и документооборота.</p>
+        <p>Во время учёбы я изучаю организацию почтовых отправлений, правила оформления документации, работу с клиентами и основы логистики. Стремлюсь стать квалифицированным специалистом, который обеспечивает надёжность и скорость доставки.</p>
+        <p>Ценю ответственность, внимательность и желание учиться новому — эти качества помогают мне в учёбе и будут полезны в работе.</p>
+      </div>
+      <ul class="info-list fade-in">
+        <li>
+          <div class="info-icon">🎓</div>
+          <div><div class="info-label">Статус</div><div class="info-value">Студентка колледжа</div></div>
+        </li>
+        <li>
+          <div class="info-icon">📦</div>
+          <div><div class="info-label">Специальность</div><div class="info-value">Почтовая связь</div></div>
+        </li>
+        <li>
+          <div class="info-icon">📍</div>
+          <div><div class="info-label">Город</div><div class="info-value">Волгоград</div></div>
+        </li>
+        <li>
+          <div class="info-icon">⭐</div>
+          <div><div class="info-label">Цель</div><div class="info-value">Специалист почтовой службы</div></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:#fff;">
+  <div class="section-inner">
+    <div class="section-title">
+      <h2>Навыки и компетенции</h2>
+      <p>Что я изучаю и умею в рамках специальности</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <div class="skill-icon">📮</div>
+        <h3>Почтовые отправления</h3>
+        <p>Приём, обработка, сортировка и выдача писем, посылок и бандеролей</p>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">📋</div>
+        <h3>Документооборот</h3>
+        <p>Оформление сопроводительных документов, бланков и накладных</p>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">🤝</div>
+        <h3>Работа с клиентами</h3>
+        <p>Консультирование отправителей и получателей, решение спорных ситуаций</p>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">🚚</div>
+        <h3>Логистика</h3>
+        <p>Основы организации маршрутов доставки и контроля перемещения почты</p>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">💻</div>
+        <h3>Работа с ПО</h3>
+        <p>Использование почтовых информационных систем и баз данных</p>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-icon">🔒</div>
+        <h3>Сохранность и конфиденциальность</h3>
+        <p>Обеспечение безопасности отправлений и защиты персональных данных</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-title">
+      <h2>Образование</h2>
+      <p>Мой учебный путь</p>
+    </div>
+    <div class="timeline fade-in">
+      <div class="timeline-item">
+        <span class="year">2024 — н.в.</span>
+        <h3>Среднее профессиональное образование</h3>
+        <p class="inst">Колледж · Специальность «Почтовая связь»</p>
+        <p>Изучение организации почтовой связи, документооборота, клиентского обслуживания и основ логистики. Практические занятия и производственная практика.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="year">До 2024</span>
+        <h3>Основное общее образование</h3>
+        <p class="inst">Школа</p>
+        <p>Окончание школы с хорошими результатами, участие в школьных мероприятиях.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="section-title">
+      <h2>Контакты</h2>
+      <p>Свяжитесь со мной — буду рада общению и предложениям</p>
+    </div>
+    <div class="contact-grid">
+      <a href="tel:+79000000000" class="contact-card">
+        <div class="ic">📞</div>
+        <div class="lbl">Телефон</div>
+        <div class="val">+7 (900) 000-00-00</div>
+      </a>
+      <a href="mailto:example@mail.ru" class="contact-card">
+        <div class="ic">✉️</div>
+        <div class="lbl">Email</div>
+        <div class="val">example@mail.ru</div>
+      </a>
+      <a href="https://t.me/" class="contact-card" target="_blank" rel="noopener">
+        <div class="ic">💬</div>
+        <div class="lbl">Telegram</div>
+        <div class="val">@username</div>
+      </a>
+      <a href="https://vk.com/" class="contact-card" target="_blank" rel="noopener">
+        <div class="ic">👥</div>
+        <div class="lbl">ВКонтакте</div>
+        <div class="val">vk.com/username</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Сайт-визитка · Специальность «Почтовая связь» · Волгоград</p>
+</footer>
+
+<script>
+  // Бургер-меню
+  document.getElementById('burger').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  // Закрытие меню при клике
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+  // Анимация появления
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  // Плавный скролл
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
